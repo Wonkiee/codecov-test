@@ -1,5 +1,5 @@
 name: coverage
-on: [push]
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,10 +15,16 @@ jobs:
       - name: Run Jest tests and generate coverage report
         run: npm test
       - name: Publish test coverage report
-        uses: EndBug/add-and-commit@v4
+        uses: crazy-max/ghaction-github-pages@v3
         with:
-          add: docs
-          force: true
-          message: Add generated docs
+          target_branch: gh-pages
+          build_dir: docs
         env:
-          GITHUB_TOKEN: '${{ secrets.TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        # uses: EndBug/add-and-commit@v4
+        # with:
+        #   add: docs
+        #   force: true
+        #   message: Add generated docs
+        # env:
+        #   GITHUB_TOKEN: '${{ secrets.TOKEN }}'
